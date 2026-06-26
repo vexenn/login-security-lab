@@ -1,4 +1,4 @@
-name: Node.js Security LAb CI
+name: Node.js Security Lab CI
 
 on:
   push:
