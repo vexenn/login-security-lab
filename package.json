@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "lint": "echo 'Pre-compilation code style linting passed.'",
-    "test": "node attackSimulation.js",
+    "test": "node tests/attackSimulation.js",
     "build": "echo 'Production asset optimization sequence complete.'"
   },
   "keywords": [],
