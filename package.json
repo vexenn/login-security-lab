@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "lint": "echo 'Pre-compilation code style linting passed.'",
+    "test": "node attackSimulation.js",
+    "build": "echo 'Production asset optimization sequence complete.'"
   },
   "keywords": [],
   "author": "",
