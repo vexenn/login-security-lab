@@ -3,6 +3,10 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const { loginLimiter } = require("../middleware/rateLimiter");
 
+// POST /users/register
+
+router.post("/register", authController.register);
+
 //  Apply the brute-force limiter explicitly to the login route
 router.post("/login", loginLimiter, authController.login);
 

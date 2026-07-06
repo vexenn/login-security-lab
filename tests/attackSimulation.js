@@ -11,11 +11,11 @@ async function runSecurityTests() {
   // ==========================================
   console.log("Test 1: Simulating SQL Injection payload...");
   try {
-    const sqliResponse = await fetch("http://localhost:5000/api/login", {
+    const sqliResponse = await fetch("http://localhost:5000/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: "' OR '1'='1",
+        email: "' OR '1'='1",
         password: "anyPassword"
       })
     });
@@ -40,10 +40,10 @@ async function runSecurityTests() {
   
   for (let i = 1; i <= 6; i++) {
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "admin", password: "wrongpassword" })
+        body: JSON.stringify({ email: "admin@example.com", password: "wrongpassword" })
       });
 
       const data = await response.json();
