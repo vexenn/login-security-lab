@@ -137,6 +137,7 @@
 
     <script>
         const API_BASE = "http://localhost:5000";
+        let cachedTasks = [];
 
         // Initialization lifecycle hook
         window.addEventListener("DOMContentLoaded", () => {
@@ -298,6 +299,8 @@
                 });
                 if (!res.ok) throw new Error("Failure processing tasks lookup array.");
                 const tasks = await res.json();
+
+                cachedTasks = tasks;
                 
                 renderTaskGrid(tasks);
                 calculateAnalyticsMetrics(tasks);
@@ -342,6 +345,18 @@
 
         async function updateTaskStatus(taskId, currentStatusValue) {
             const token = localStorage.getItem("authToken");
+
+            const targetTask = cachedTasks.find(t => t.taskId === taskId);
+            if (!targetTask) return;
+
+            const payload = {
+                title: targetTask.title,
+                category: targetTask.category,
+                priority: targetTask.priority,
+                status: currentStatusValue,
+                dueDate: targetTask.dueDate
+            };
+
             try {
                 // Fetch current base variables to update without context destruction
                 const res = await fetch(`${API_BASE}/tasks/${taskId}`, {
@@ -350,7 +365,7 @@
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`
                     },
-                    body: JSON.stringify({ status: currentStatusValue })
+                    body: JSON.stringify(payload)
                 });
                 if (!res.ok) throw new Error("Status transformation state rejected.");
                 fetchApplicationTasks();
